@@ -223,7 +223,7 @@ const VOCABULARY = [
     // Infinity
 ]
 
-const VERSION = "1.1"
+const VERSION = "1.3"
 
 this.options = {
     ships: Object.values(SHIPS["vanilla"]).flatMap(a => a.code),
