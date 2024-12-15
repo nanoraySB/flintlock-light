@@ -224,8 +224,9 @@ const VOCABULARY = [
     {text: "Discord",   icon: "\u007b", key: "D"},
     {text: "Idiot",     icon: "\u0079", key: "I"},
     {text: "Lag",       icon: "\u0069", key: "J"},
-    {text: "Spectate",  icon: "\u0059", key: "W"}
+    {text: "Spectate",  icon: "\u0059", key: "W"},
     // Infinity
+	{ text: "Love", icon: "❤️", key: "B" },
 ]
 
 const VERSION = "1.3-Julia"
@@ -500,43 +501,267 @@ const commandEcho = (command, description, example, color) => game.modding.termi
         if (!document.getElementById('admin-panel-styles')) {
             const styleElement = document.createElement('style');
             styleElement.id = 'admin-panel-styles';
-            styleElement.textContent = atob(`CiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgewogICAgICAgICAgICAgICAgICAgIHotaW5kZXg6IDY7CiAgICAgICAgICAgICAgICAgICAgZm9udC1mYW1pbHk6ICdSb2JvdG8gTW9ubyc7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICAgICAgICAgIGJvdHRvbTogMDsKICAgICAgICAgICAgICAgICAgICBsZWZ0OiAwOwogICAgICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlOwogICAgICAgICAgICAgICAgICAgIGhlaWdodDogMTAwJTsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiAjNjYwMDAwOwogICAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDQwcHg7CiAgICAgICAgICAgICAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgICAgICAgICAgICAgIG92ZXJmbG93LXk6IGF1dG87CiAgICAgICAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDE1cHggcmdiYSgwLDAsMCwwLjUpOwogICAgICAgICAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7CiAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogd2lkdGggMC4zcywgaGVpZ2h0IDAuM3M7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMIGgyIHsKICAgICAgICAgICAgICAgICAgICBjb2xvcjogI2ZmNjY2NjsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgbGFiZWwgewogICAgICAgICAgICAgICAgICAgIGNvbG9yOiAjZmY5OTk5OwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCBpbnB1dCB7CiAgICAgICAgICAgICAgICAgICAgZm9udC1mYW1pbHk6ICdSb2JvdG8gTW9ubyc7CiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogNXB4OwogICAgICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlOwogICAgICAgICAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7CiAgICAgICAgICAgICAgICAgICAgYm9yZGVyOiAycHggc29saWQgI2ZmNGQ0ZDsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzMwMDAwOwogICAgICAgICAgICAgICAgICAgIGNvbG9yOiAjZmY5OTk5OwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCBidXR0b24gewogICAgICAgICAgICAgICAgICAgIGZvbnQtZmFtaWx5OiAnUm9ib3RvIE1vbm8nOwogICAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDVweDsKICAgICAgICAgICAgICAgICAgICBib3JkZXI6IG5vbmU7CiAgICAgICAgICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyOwogICAgICAgICAgICAgICAgICAgIGNvbG9yOiB3aGl0ZTsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgYnV0dG9uLnNob3cgewogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZjMzMzM7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMIGJ1dHRvbi5raWNrIHsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmYxYTFhOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCBidXR0b24uYmFuIHsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTYwMDAwOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCBidXR0b24uYmFubmVkLWxpc3QgewogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNjYzAwMDA7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMIGJ1dHRvbi51bmJhbiB7CiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2IzMDAwMDsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgPiAjdG9wX3JpZ2h0IHsKICAgICAgICAgICAgICAgICAgICBwYWRkaW5nOiAxMHB4OwogICAgICAgICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgICAgICAgICAgICAgICAgICB0b3A6IDA7CiAgICAgICAgICAgICAgICAgICAgcmlnaHQ6IDA7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMID4gI3RvcF9yaWdodCBidXR0b24udG9wX3JpZ2h0X2J1dHRvbiB7CiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmMDAwMDsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgPiAjdmVyc2lvbiB7CiAgICAgICAgICAgICAgICAgICAgZm9udC1zaXplOiAxMnB4OwogICAgICAgICAgICAgICAgICAgIHJpZ2h0OiAwOwogICAgICAgICAgICAgICAgICAgIGJvdHRvbTogMDsKICAgICAgICAgICAgICAgICAgICBtYXJnaW46IDEwcHg7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAjc2V0dGluZ3MtYnV0dG9uIHsKICAgICAgICAgICAgICAgICAgICBtYXJnaW46IDEwcHg7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICAgICAgICAgIHRvcDogMDsKICAgICAgICAgICAgICAgICAgICBsZWZ0OiAwOwogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZjAwMDA7CiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogNXB4OwogICAgICAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTsKICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICAgICAgICAgICAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAjc2V0dGluZ3MtY29udGFpbmVyIHsKICAgICAgICAgICAgICAgICAgICBkaXNwbGF5OiBibG9jazsKICAgICAgICAgICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7CiAgICAgICAgICAgICAgICAgICAgdG9wOiAtMjAwcHg7CiAgICAgICAgICAgICAgICAgICAgbGVmdDogMDsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNjYwMDAwOwogICAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDIwcHg7CiAgICAgICAgICAgICAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgICAgICAgICAgICAgIG92ZXJmbG93LXk6IGF1dG87CiAgICAgICAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDE1cHggcmdiYSgwLDAsMCwwLjUpOwogICAgICAgICAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7CiAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogdG9wIDAuM3M7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMICNzZXR0aW5ncy1jb250YWluZXIuc2hvdyB7CiAgICAgICAgICAgICAgICAgICAgdG9wOiAwOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgI3NldHRpbmdzLWNvbnRhaW5lciAjc2V0dGluZyB7CiAgICAgICAgICAgICAgICAgICAgZGlzcGxheTogZmxleDsKICAgICAgICAgICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAudG9nZ2xlLXN3aXRjaCB7CiAgICAgICAgICAgICAgICAgICAgbWFyZ2luLWxlZnQ6IDEwcHg7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgICAgICAgICAgICAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jazsKICAgICAgICAgICAgICAgICAgICB3aWR0aDogNjBweDsKICAgICAgICAgICAgICAgICAgICBoZWlnaHQ6IDM0cHg7CiAgICAgICAgICAgICAgICAgICAgYm9yZGVyOiAycHggc29saWQgI2ZmNGQ0ZDsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzMwMDAwOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAudG9nZ2xlLXN3aXRjaCBpbnB1dCB7CiAgICAgICAgICAgICAgICAgICAgb3BhY2l0eTogMDsKICAgICAgICAgICAgICAgICAgICB3aWR0aDogMDsKICAgICAgICAgICAgICAgICAgICBoZWlnaHQ6IDA7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMIC5zbGlkZXIgewogICAgICAgICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsKICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICAgICAgICAgICAgICAgICAgdG9wOiAwOwogICAgICAgICAgICAgICAgICAgIGxlZnQ6IDA7CiAgICAgICAgICAgICAgICAgICAgcmlnaHQ6IDA7CiAgICAgICAgICAgICAgICAgICAgYm90dG9tOiAwOwogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICM2NjAwMDA7CiAgICAgICAgICAgICAgICAgICAgLXdlYmtpdC10cmFuc2l0aW9uOiAuNHM7CiAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogLjRzOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAuc2xpZGVyOmJlZm9yZSB7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlOwogICAgICAgICAgICAgICAgICAgIGNvbnRlbnQ6ICIiOwogICAgICAgICAgICAgICAgICAgIGhlaWdodDogMjZweDsKICAgICAgICAgICAgICAgICAgICB3aWR0aDogMjZweDsKICAgICAgICAgICAgICAgICAgICBsZWZ0OiA0cHg7CiAgICAgICAgICAgICAgICAgICAgYm90dG9tOiA0cHg7CiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmOTk5OTsKICAgICAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zaXRpb246IC40czsKICAgICAgICAgICAgICAgICAgICB0cmFuc2l0aW9uOiAuNHM7CiAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgI0ZMX0FETUlOX1BBTkVMIGlucHV0OmNoZWNrZWQgKyAuc2xpZGVyIHsKICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmYzMzMzOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCBpbnB1dDpmb2N1cyArIC5zbGlkZXIgewogICAgICAgICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAxcHggI2ZmMzMzMzsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgaW5wdXQ6Y2hlY2tlZCArIC5zbGlkZXI6YmVmb3JlIHsKICAgICAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybTogdHJhbnNsYXRlWCgyNnB4KTsKICAgICAgICAgICAgICAgICAgICAtbXMtdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDI2cHgpOwogICAgICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgyNnB4KTsKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAjRkxfQURNSU5fUEFORUwgI3NhdmUtc2V0dGluZ3MgewogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZjMzMzM7CiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogNXB4OwogICAgICAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTsKICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICAgICAgICAgICAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgICNGTF9BRE1JTl9QQU5FTCAjY2xvc2Utc2V0dGluZ3MgewogICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZjFhMWE7CiAgICAgICAgICAgICAgICAgICAgcGFkZGluZzogNXB4OwogICAgICAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTsKICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7CiAgICAgICAgICAgICAgICAgICAgY29sb3I6IHdoaXRlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICA=`);
+            styleElement.textContent = `
+                #FL_ADMIN_PANEL {
+                    z-index: 6;
+                    font-family: 'Roboto Mono';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: #660000;
+                    padding: 40px;
+                    color: white;
+                    overflow-y: auto;
+                    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+                    box-sizing: border-box;
+                    transition: width 0.3s, height 0.3s;
+                }
+
+                #FL_ADMIN_PANEL h2 {
+                    color: #ff6666;
+                }
+
+                #FL_ADMIN_PANEL label {
+                    color: #ff9999;
+                }
+
+                #FL_ADMIN_PANEL select {
+                    font-family: 'Roboto Mono';
+                    padding: 5px; 
+                    background-color: #330000; 
+                    color: #FFFFFF; 
+                    border: 2px solid #FF4d4d;
+                }
+
+                #FL_ADMIN_PANEL button {
+                    font-family: 'Roboto Mono';
+                    padding: 5px;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
+                }
+
+                #FL_ADMIN_PANEL button.show {
+                    background-color: #ff3333;
+                }
+
+                #FL_ADMIN_PANEL button.kick {
+                    background-color: #ff1a1a;
+                }
+
+                #FL_ADMIN_PANEL button.ban {
+                    background-color: #e60000;
+                }
+
+                #FL_ADMIN_PANEL button.banned-list {
+                    background-color: #cc0000;
+                }
+
+                #FL_ADMIN_PANEL button.unban {
+                    background-color: #b30000;
+                }
+
+                #FL_ADMIN_PANEL > #top_right {
+                    padding: 10px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+
+                #FL_ADMIN_PANEL > #top_right button.top_right_button {
+                    background-color: #ff0000;
+                }
+
+                #FL_ADMIN_PANEL > #version {
+                    font-size: 12px;
+                    right: 0;
+                    bottom: 0;
+                    margin: 10px;
+                    position: absolute;
+                }
+
+                #FL_ADMIN_PANEL #settings-button {
+                    margin: 10px;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background-color: #ff0000;
+                    padding: 5px;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
+                }
+
+                #FL_ADMIN_PANEL #settings-container {
+                    display: block;
+                    position: absolute;
+                    top: -200px;
+                    left: 0;
+                    background-color: #660000;
+                    padding: 20px;
+                    color: white;
+                    overflow-y: auto;
+                    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+                    box-sizing: border-box;
+                    transition: top 0.3s;
+                }
+
+                #FL_ADMIN_PANEL #settings-container.show {
+                    top: 0;
+                }
+                
+                #FL_ADMIN_PANEL #settings-container #setting {
+                    display: flex;
+                    align-items: center;
+                }
+
+                #FL_ADMIN_PANEL .toggle-switch {
+                    margin-left: 10px;
+                    position: relative;
+                    display: inline-block;
+                    width: 60px;
+                    height: 34px;
+                    border: 2px solid #ff4d4d;
+                    background-color: #330000;
+                }
+
+                #FL_ADMIN_PANEL .toggle-switch input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                #FL_ADMIN_PANEL .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #660000;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+
+                #FL_ADMIN_PANEL .slider:before {
+                    position: absolute;
+                    content: "";
+                    height: 26px;
+                    width: 26px;
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: #ff9999;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+
+                #FL_ADMIN_PANEL input:checked + .slider {
+                    background-color: #ff3333;
+                }
+
+                #FL_ADMIN_PANEL input:focus + .slider {
+                    box-shadow: 0 0 1px #ff3333;
+                }
+
+                #FL_ADMIN_PANEL input:checked + .slider:before {
+                    -webkit-transform: translateX(26px);
+                    -ms-transform: translateX(26px);
+                    transform: translateX(26px);
+                }
+
+                #FL_ADMIN_PANEL #save-settings {
+                    background-color: #ff3333;
+                    padding: 5px;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
+                }
+
+                #FL_ADMIN_PANEL #close-settings {
+                    background-color: #ff1a1a;
+                    padding: 5px;
+                    border: none;
+                    cursor: pointer;
+                    color: white;
+                }
+            `;
             document.head.appendChild(styleElement);
         }
     };
 
-    const initAdminPanel = (code) => {
-        if (!document.getElementById('FL_ADMIN_PANEL')) {
-            code.insertAdjacentHTML('beforeend', atob(`CiAgICAgICAgICAgICAgICA8ZGl2IGlkPSJGTF9BRE1JTl9QQU5FTCI+CiAgICAgICAgICAgICAgICAgICAgPGgyPkFkbWluIFBhbmVsPC9oMj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJkaXNwbGF5OiBmbGV4OyBmbGV4LWRpcmVjdGlvbjogY29sdW1uOyBnYXA6IDhweDsiPgogICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzPSJzaG93IiBvbmNsaWNrPSJzaG93SURzKCkiPlNob3cgUGxheWVyIExpc3Q8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICAgICAgPGxhYmVsIGZvcj0icGxheWVySUQiPlBsYXllciBJRDo8L2xhYmVsPgogICAgICAgICAgICAgICAgICAgICAgICA8aW5wdXQgdHlwZT0idGV4dCIgaWQ9InBsYXllcklEIiBwbGFjZWhvbGRlcj0iRW50ZXIgUGxheWVyIElEIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbiBjbGFzcz0ia2ljayIgb25jbGljaz0ia2ljayhkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncGxheWVySUQnKS52YWx1ZSkiPktpY2sgUGxheWVyPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24gY2xhc3M9ImJhbiIgb25jbGljaz0iYmFuKGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwbGF5ZXJJRCcpLnZhbHVlKSI+QmFuIFBsYXllcjwvYnV0dG9uPgogICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzPSJiYW5uZWQtbGlzdCIgb25jbGljaz0iYmFubmVkTGlzdCgpIj5TaG93IEJhbm5lZCBMaXN0PC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24gY2xhc3M9InVuYmFuIiBvbmNsaWNrPSJ1bmJhbihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncGxheWVySUQnKS52YWx1ZSkiPlVuYmFuIFBsYXllcjwvYnV0dG9uPgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXYgaWQ9InRvcF9yaWdodCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24gY2xhc3M9InRvcF9yaWdodF9idXR0b24iIG9uY2xpY2s9ImxpbmsoKSI+TGluazwvYnV0dG9uPgogICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzPSJ0b3BfcmlnaHRfYnV0dG9uIiBvbmNsaWNrPSJQdWJsaXNoVG9TZXJ2ZXJMaXN0KCkiPlB1Ymxpc2g8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbiBjbGFzcz0idG9wX3JpZ2h0X2J1dHRvbiIgb25jbGljaz0iZ2FtZS5tb2RkaW5nLmNvbW1hbmRzLnN0b3AoKSI+U3RvcDwvYnV0dG9uPgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxzcGFuIGlkPSJ2ZXJzaW9uIj5WZXJzaW9uOiA=`) + VERSION + atob(`PC9zcGFuPgogICAgICAgICAgICAgICAgICAgIDxidXR0b24gaWQ9InNldHRpbmdzLWJ1dHRvbiI+U2V0dGluZ3M8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGlkPSJzZXR0aW5ncy1jb250YWluZXIiPgogICAgICAgICAgICAgICAgICAgICAgICA8aDI+U2V0dGluZ3M8L2gyPgogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGlkPSJzZXR0aW5nIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxsYWJlbCBmb3I9InB1Ymxpc2hUb1NlcnZlckxpc3QiPlB1Ymxpc2ggdG8gU2VydmVyIExpc3Q6PC9sYWJlbD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9InRvZ2dsZS1zd2l0Y2giPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpbnB1dCB0eXBlPSJjaGVja2JveCIgaWQ9InB1Ymxpc2hUb1NlcnZlckxpc3QiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0ic2xpZGVyIiBmb3I9InB1Ymxpc2hUb1NlcnZlckxpc3QiPjwvbGFiZWw+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvYnI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24gaWQ9InNhdmUtc2V0dGluZ3MiPlNhdmU8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgICAgICAgPGJ1dHRvbiBpZD0iY2xvc2Utc2V0dGluZ3MiPkNsb3NlPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4=`));
+	const initAdminPanel = (code) => {
+		if (!document.getElementById('FL_ADMIN_PANEL')) {
+			code.insertAdjacentHTML('beforeend', `
+				<div id="FL_ADMIN_PANEL">
+					<h2>Admin Panel</h2>
+					<div style="display: flex; flex-direction: column; gap: 8px;">
+						<button class="show" onclick="showIDs()">Show Player List</button>
+						<label for="playerID">Select Player:</label>
+						<select id="playerID">
+							<option value="" disabled selected>Select a player</option>
+						</select>
+						<button class="kick" onclick="kick(document.getElementById('playerID').value)">Kick Player</button>
+                        <button class="ban" onclick="ban(document.getElementById('playerID').value)">Ban Player</button>
+                        <select id="bannedPlayerID">
+                            <option value="" disabled selected>Select a banned player</option>
+                        </select>
+						<button class="unban" onclick="unban(document.getElementById('bannedPlayerID').value)">Unban Player</button>
+					</div>
+					<div id="top_right">
+						<button class="top_right_button" onclick="link()">Link</button>
+						<button class="top_right_button" onclick="PublishToServerList()">Publish</button>
+						<button class="top_right_button" onclick="game.modding.commands.stop()">Stop</button>
+					</div>
+					<span id="version">Version: ${VERSION}</span>
+					<button id="settings-button">Settings</button>
+					<div id="settings-container">
+						<h2>Settings</h2>
+						<div id="setting">
+							<label for="publishToServerList">Publish to Server List:</label>
+							<div class="toggle-switch">
+								<input type="checkbox" id="publishToServerList">
+								<label class="slider" for="publishToServerList"></label>
+							</div>
+						</div>
+						</br>
+						<button id="save-settings">Save</button>
+						<button id="close-settings">Close</button>
+					</div>
+				</div>
+			`);
 
-            setTimeout(function() {
-                const publishToServerListInput = document.getElementById('publishToServerList');
-                publishToServerListInput.checked = settings.PUBLISH_TO_SERVERLIST;
-            }, 500);
-        }
+			updatePlayerDropdown();
 
-        document.getElementById('settings-button').addEventListener('click', () => {
-            const settingsContainer = document.getElementById('settings-container');
-            settingsContainer.classList.add('show');
-        });
+			setTimeout(function() {
+				const publishToServerListInput = document.getElementById('publishToServerList');
+				publishToServerListInput.checked = settings.PUBLISH_TO_SERVERLIST;
+			}, 500);
+		}
 
-        document.getElementById('save-settings').addEventListener('click', () => {
-            settings.PUBLISH_TO_SERVERLIST = document.getElementById('publishToServerList').checked;
-            saveSettings();
-            const settingsContainer = document.getElementById('settings-container');
-            settingsContainer.classList.remove('show');
-        });
+		document.getElementById('settings-button').addEventListener('click', () => {
+			const settingsContainer = document.getElementById('settings-container');
+			settingsContainer.classList.add('show');
+		});
 
-        document.getElementById('close-settings').addEventListener('click', () => {
-            const settingsContainer = document.getElementById('settings-container');
-            settingsContainer.classList.remove('show');
-        });
+		document.getElementById('save-settings').addEventListener('click', () => {
+			settings.PUBLISH_TO_SERVERLIST = document.getElementById('publishToServerList').checked;
+			saveSettings();
+			const settingsContainer = document.getElementById('settings-container');
+			settingsContainer.classList.remove('show');
+		});
 
-        document.getElementById('publishToServerList').addEventListener('change', (e) => {
-            settings.PUBLISH_TO_SERVERLIST = e.target.checked;
-            saveSettings();
-        });
-    };
+		document.getElementById('close-settings').addEventListener('click', () => {
+			const settingsContainer = document.getElementById('settings-container');
+			settingsContainer.classList.remove('show');
+		});
+
+		document.getElementById('publishToServerList').addEventListener('change', (e) => {
+			settings.PUBLISH_TO_SERVERLIST = e.target.checked;
+			saveSettings();
+		});
+	};
 
     const runAdminPanel = () => {
         const elements = checkElements();
@@ -550,6 +775,33 @@ const commandEcho = (command, description, example, color) => game.modding.termi
     setInterval(runAdminPanel, 1000);
     window.addEventListener('resize', () => setTimeout(runAdminPanel, 100));
 })();
+
+const updatePlayerDropdown = () => {
+    const playerSelect = document.getElementById('playerID');
+
+    if (!playerSelect) return;
+
+    playerSelect.innerHTML = '<option value="" disabled selected>Select a player</option>';
+
+    for (let ship of game.ships) {
+        const option = document.createElement('option');
+        option.value = ship.id; 
+        option.textContent = `${ship.id} | ${ship.name}`;
+        playerSelect.appendChild(option);
+    }
+};
+
+const updateBannedDropdown = () => {
+    const bannedSelect = document.getElementById('bannedPlayerID');
+    bannedSelect.innerHTML = '<option value="" disabled selected>Select a banned player</option>'; 
+	
+    sessionMemory.banned.forEach((name, index) => {
+        const option = document.createElement('option');
+        option.value = index; 
+        option.textContent = name;
+        bannedSelect.appendChild(option);
+    });
+};
 
 ;(function setCenterObject() {
     game.setObject({
@@ -636,6 +888,7 @@ ban = (id, reason) => {
     sessionMemory.banned.push(ship.name);
     statusMessage("success", `${ship.name} has been banned`)
     kickPlayer(ship, reason);
+	updateBannedDropdown();
 }
 
 bannedList = () => {
@@ -664,9 +917,12 @@ unban = (ind) => {
     if (isBrute) {
         statusMessage("success", `${sessionMemory.bruteforceBanned[sind]} is no longer bruteforce banned`);
         sessionMemory.bruteforceBanned = removeIndexFromArray(sessionMemory.bruteforceBanned, sind);
+		updateBannedDropdown();
+
     } else {
         statusMessage("success", `${sessionMemory.banned[ind]} is no longer banned`);
         sessionMemory.banned = removeIndexFromArray(sessionMemory.banned, ind);
+		updateBannedDropdown();
     }
 }
 
@@ -1154,6 +1410,7 @@ const customEvent = (eventName) => {
         case "ship_left":
             recalculateTickDelay();
             updateScoreboard();
+			updatePlayerDropdown();
             break
     }
 }
@@ -1191,6 +1448,7 @@ this.event = function (event, game) {
                         if (event.ship.custom._captchaInit) return;
                         event.ship.custom._captchaInit = true;
                         statusMessage("info", `${event.ship.name} joined. ID: ${event.ship.id}`);
+						updatePlayerDropdown();
                         return Captcha.initiateCaptcha(event.ship)
                     }
                 }
@@ -1352,6 +1610,11 @@ this.event = function (event, game) {
                             if (staticMemory.requireShip && staticMemory.requireShip != Number(type)) {
                                 return;
                             }
+							
+							if (event.ship.type == 191){
+								event.ship.spectating.value = false;
+								event.ship.set({collider: true});
+							}
 
                             if (_ALLOW_LEGACY_TURN) {
                                 if (type == "605") {
