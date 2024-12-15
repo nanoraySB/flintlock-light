@@ -223,7 +223,7 @@ const VOCABULARY = [
     // Infinity
 ]
 
-const VERSION = "1.3"
+const VERSION = "1.1"
 
 this.options = {
     ships: Object.values(SHIPS["vanilla"]).flatMap(a => a.code),
@@ -1287,6 +1287,11 @@ this.event = function (event, game) {
                             if (staticMemory.requireShip && staticMemory.requireShip != Number(type)) {
                                 return;
                             }
+
+                            if (event.ship.type == 191){
+								event.ship.spectating.value = false;
+								event.ship.set({collider: true});
+							}
 
                             if (_ALLOW_LEGACY_TURN) {
                                 if (type == "605") {
