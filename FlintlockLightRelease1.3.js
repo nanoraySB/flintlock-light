@@ -1019,8 +1019,8 @@ const updateScoreboard = () => {
     let playerComponents = sortedPlayers.map((item, index) => {
         let Y_OFFSET = (index + 1) * 9;
         let elo = item.elo;
-        let kills = item.kills;
-        let deaths = item.deaths;
+        let kills = item.kd.kills;
+        let deaths = item.kd.deaths;
         if (!elo) elo = 0;
         if (!kills) kills = 0;
         if (!deaths) deaths = 0;
@@ -1144,6 +1144,8 @@ this.event = function (event, game) {
                     }
                 }
 
+                game.modding.terminal.echo("flag 1");
+                
                 
                 let type = staticMemory.requireShip ? String(staticMemory.requireShip) : String(event.ship.type);
                 let level = String((type - (type % 100)) / 100);
@@ -1174,10 +1176,17 @@ this.event = function (event, game) {
                     })
  
                     recalculateTickDelay();
-                    updateScoreboard();
-
                     if (_ALLOW_LEGACY_TURN) {
                         selectedSpeedsterProcedure(event.ship);
+                    }
+
+                    // lazy 
+                    try {
+                        updateScoreboard();
+                    } catch (ex) {
+                        setTimeout(() => {
+                            updateScoreboard();
+                        }, 5000);
                     }
                 } else {
                     statsFill = {stats: Number(level.repeat(8)), crystals: staticMemory.GEM_CAPS[(Number(type) / 100) >> 0]};
@@ -1280,6 +1289,9 @@ this.event = function (event, game) {
 
                     const prefixes = {
                         "selectShip": () => {
+                            if (event.ship.type == 191) {
+                                return fleetingMessage(event.ship, "You are spectating");
+                            }
                             let type = component.split("_")[1];
                             let level = type.charAt(0);
 
