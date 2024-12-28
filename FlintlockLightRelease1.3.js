@@ -1143,8 +1143,6 @@ this.event = function (event, game) {
                         }
                     }
                 }
-
-                game.modding.terminal.echo("flag 1");
                 
                 
                 let type = staticMemory.requireShip ? String(staticMemory.requireShip) : String(event.ship.type);
@@ -1299,11 +1297,6 @@ this.event = function (event, game) {
                             if (staticMemory.requireShip && staticMemory.requireShip != Number(type)) {
                                 return;
                             }
-
-                            if (event.ship.type == 191){
-								event.ship.spectating.value = false;
-								event.ship.set({collider: true});
-							}
 
                             if (_ALLOW_LEGACY_TURN) {
                                 if (type == "605") {
