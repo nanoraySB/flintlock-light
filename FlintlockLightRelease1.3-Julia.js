@@ -226,7 +226,8 @@ const VOCABULARY = [
     {text: "Lag",       icon: "\u0069", key: "J"},
     {text: "Spectate",  icon: "\u0059", key: "W"},
     // Infinity
-	{ text: "Love", icon: "❤️", key: "B" },
+    {text: "Thanks",    icon: "\u0041", key: "X"},
+    {text: "Love",      icon: "❤️",    key: "B"},
 ]
 
 const VERSION = "1.3-Julia"
@@ -691,7 +692,7 @@ const commandEcho = (command, description, example, color) => game.modding.termi
         }
     };
 
-	const initAdminPanel = (code) => {
+	const initAdminPanel = async (code) => {
 		if (!document.getElementById('FL_ADMIN_PANEL')) {
 			code.insertAdjacentHTML('beforeend', `
 				<div id="FL_ADMIN_PANEL">
@@ -735,9 +736,10 @@ const commandEcho = (command, description, example, color) => game.modding.termi
 			updatePlayerDropdown();
 
 			setTimeout(function() {
+                settings = JSON.parse(localStorage.getItem('adminPanelSettings'));
 				const publishToServerListInput = document.getElementById('publishToServerList');
 				publishToServerListInput.checked = settings.PUBLISH_TO_SERVERLIST;
-			}, 500);
+			}, 1000);
 		}
 
 		document.getElementById('settings-button').addEventListener('click', () => {
@@ -1340,8 +1342,8 @@ const updateScoreboard = () => {
     let playerComponents = sortedPlayers.map((item, index) => {
         let Y_OFFSET = (index + 1) * 9;
         let elo = item.elo;
-        let kills = item.kills;
-        let deaths = item.deaths;
+        let kills = item.kd.kills;
+        let deaths = item.kd.deaths;
         if (!elo) elo = 0;
         if (!kills) kills = 0;
         if (!deaths) deaths = 0;
@@ -1880,15 +1882,13 @@ function expectedProbability(playerRating, opponentRating) {
 const roundToDecimalPlace = (number, decimalPlaces) => Number(number.toFixed(decimalPlaces));
 
 function updateSubjectElo(subject, opponent, didSubjectWin) {
-    const {MAX_WIN_LOSS_THRESHOLD} = staticMemory;
-
-    let kFactor = staticMemory.ELO_K_FACTOR;
+    const {MAX_WIN_LOSS_THRESHOLD, ELO_K_FACTOR} = staticMemory;
 
     const expectedWinProbability = expectedProbability(subject, opponent);
 
     const actualOutcome = didSubjectWin ? 1 : 0;
 
-    const newRating = subject + kFactor * (actualOutcome - expectedWinProbability);
+    const newRating = subject + ELO_K_FACTOR * (actualOutcome - expectedWinProbability);
 
     if (didSubjectWin) {
         if (newRating > (subject + MAX_WIN_LOSS_THRESHOLD)) {
