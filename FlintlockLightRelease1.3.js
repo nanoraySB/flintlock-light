@@ -1019,8 +1019,8 @@ const updateScoreboard = () => {
     let playerComponents = sortedPlayers.map((item, index) => {
         let Y_OFFSET = (index + 1) * 9;
         let elo = item.elo;
-        let kills = item.kd.kills;
-        let deaths = item.kd.deaths;
+        let kills = item.kd?.kills;
+        let deaths = item.kd?.deaths;
         if (!elo) elo = 0;
         if (!kills) kills = 0;
         if (!deaths) deaths = 0;
